@@ -3,6 +3,7 @@ import express, { Application } from 'express';
 import cors from  'cors';
 
 import userRoutes from '../router/usuario';
+import authRoutes from '../router/auth';
 import db from '../db/connection';
 
 
@@ -12,7 +13,8 @@ class Server {
     private app: Application;
     private port: number;
     private apiPaths = {
-        usuarios: '/api/usuarios'
+        auth: '/api/auth',
+        usuarios: '/api/usuarios',
     }
     
     
@@ -33,6 +35,7 @@ class Server {
 
     routes(){
 
+        this.app.use( this.apiPaths.auth,     authRoutes);
         this.app.use( this.apiPaths.usuarios, userRoutes);
     }
 
