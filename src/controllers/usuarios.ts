@@ -7,10 +7,8 @@ import User from '../models/usuario';
 
 // Obtener todos los usuarios
 export const getUsuarios = async (req: Request, res: Response) => {
-
     const usuarios = await User.findAll();
-
-    return res.json({ usuarios });
+    return res.json( usuarios );
 }
 
 
@@ -21,12 +19,13 @@ export const getUsuario = async (req: Request, res: Response) => {
 
     const usuario = await User.findByPk( id );
 
+    
     if ( !usuario ) {
         return res.status(404).json({
             msg: `No existe un usuario con el id ${ id }`
         });
     }
-    
+
     return res.json( usuario );
 }
 
@@ -44,7 +43,7 @@ export const postUsuarios = async (req: Request, res: Response) => {
     try {
         // Crear nuevo usuario y guardarlo en DB
         const usuario = await User.create( data );
-        return res.status(401).json( { usuario } );
+        return res.status(201).json( usuario );
 
     } catch (error) {
         console.log( error );

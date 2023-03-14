@@ -10,7 +10,7 @@ import {
   getUsuarios,
   postUsuarios,
   putUsuarios,
-} from "../controllers/usurios";
+} from "../controllers/usuarios";
 
 
 const router = Router();

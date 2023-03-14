@@ -17,7 +17,7 @@ router.get('/', auth);
 
 router.post('/login', [
     check('email', 'El email es obligatorio').isEmail(),
-    check('password', 'El password es obligatoria').not().isEmpty(),
+    check('password', 'El password es obligatorio').not().isEmpty(),
     validarCampos
 ], authLogin);
 

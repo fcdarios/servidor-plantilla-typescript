@@ -54,11 +54,30 @@ User.init(
       allowNull: false,
       defaultValue: true,
     },
-  },
-  {
-    tableName: 'users',
-    sequelize
-  }
+  }, 
+    {
+      tableName: 'users',
+      sequelize,
+    }
 );
+
+
+// Eliminar atributos password y createdAt y updatedAt
+User.afterFind('hookDeleteColumns', (result: any) => {
+  if (!result) return;
+  
+  if (Array.isArray(result)) {
+    result.forEach((user) => {
+      delete user.dataValues.password;
+      delete user.dataValues.createdAt;
+      delete user.dataValues.updatedAt;
+    });
+  } else {
+    delete result.dataValues.password;
+    delete result.dataValues.createdAt;
+    delete result.dataValues.updatedAt;
+  }
+});
+
 
 export default User;
