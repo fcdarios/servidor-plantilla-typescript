@@ -2,7 +2,7 @@ import { Model, DataTypes } from 'sequelize';
 import sequelize from "../db/connection";
 
 
-interface UserAttributes {
+export interface UserAttributes {
   id: number;
   name: string;
   email: string;
@@ -60,24 +60,6 @@ User.init(
       sequelize,
     }
 );
-
-
-// Eliminar atributos password y createdAt y updatedAt
-User.afterFind('hookDeleteColumns', (result: any) => {
-  if (!result) return;
-  
-  if (Array.isArray(result)) {
-    result.forEach((user) => {
-      delete user.dataValues.password;
-      delete user.dataValues.createdAt;
-      delete user.dataValues.updatedAt;
-    });
-  } else {
-    delete result.dataValues.password;
-    delete result.dataValues.createdAt;
-    delete result.dataValues.updatedAt;
-  }
-});
 
 
 export default User;

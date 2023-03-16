@@ -3,6 +3,7 @@ import bcryptjs from 'bcryptjs';
 
 import User from "../models/usuario";
 import generarJWT from "../helpers/generarJWT";
+import { DataTypes } from 'sequelize';
 
 
 //
@@ -16,27 +17,35 @@ export const auth = async (req: Request, res: Response) => {
 export const authLogin = async (req: Request, res: Response) => {
 
     const { email, password } = req.body;
-    User.removeHook('afterFind','hookDeleteColumns');
 
     try {
 
         // Verificar si el correo existe
-        const usuario = await User.findOne({ where: { email, status: true } });
+        const userAuth = await User.findOne({ where: { email, status: true } });
 
-        if ( !usuario ) {
+        if ( !userAuth ) {
             return res.status(400).json({
                 error: 'email / password no son correctos | email'
             });
         }
 
         // Verificar la contraseña
-        const isValidPassword = bcryptjs.compareSync( password, usuario.password );
+        const isValidPassword = bcryptjs.compareSync( password, userAuth.password );
         if ( !isValidPassword ) {
             return res.status(400).json({
                 msg: 'Usuario / Password no son correctos - Password'
             });
         }
 
+        // Quitar atributos createdAt y updatedAt
+        const usuario = {
+            id: userAuth.id,
+            name: userAuth.name,
+            email: userAuth.email,
+            role: userAuth.role,
+            status: userAuth.status,
+        }
+        
         // Generar JWT
         const token = await generarJWT( usuario.email );
 

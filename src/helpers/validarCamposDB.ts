@@ -29,9 +29,9 @@ export const esRolValido = async(role: string) => {
 // Validar si existe el usuario por el ID
 export const existeUsuarioPorId = async( id: number ) => {
 
-    const existeUsuario = await User.findByPk( id );
+    const existeUsuario = await User.findOne({ where: { id, status: true }});
     if ( !existeUsuario ) {
-        throw new Error(`El id ${ id } no existe`);
+        throw new Error(`El usuario ${ id } no existe`);
     }
 }
 

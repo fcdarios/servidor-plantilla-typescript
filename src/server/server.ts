@@ -5,6 +5,7 @@ import cors from  'cors';
 import userRoutes from '../router/usuario';
 import authRoutes from '../router/auth';
 import db from '../db/connection';
+import { UserAttributes } from '../models/usuario';
 
 
 
@@ -74,6 +75,14 @@ class Server {
 
    }
 
+}
+
+declare global {
+    namespace Express {
+      interface Request {
+        usuario: UserAttributes 
+      }
+    }
 }
 
 export default Server;

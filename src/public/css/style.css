@@ -1,0 +1,29 @@
+html,
+body {
+    background-color: #3F527F;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.container {
+    padding: 30px;
+    text-align: center;
+  }
+
+.container h1 {
+    color: #cbdafebb;
+    font-size: 6rem;
+    font-weight: 600;
+    text-align: center;
+    margin: 0;
+}
+
+.container p {
+    color: #242f49e8;
+    font-size: 2rem;
+    font-weight: 600;
+    text-align: center;
+    margin: 0;
+}

@@ -7,7 +7,7 @@ import User from '../models/usuario';
 
 // Obtener todos los usuarios
 export const getUsuarios = async (req: Request, res: Response) => {
-    const usuarios = await User.findAll();
+    const usuarios = await User.findAll({ attributes: { exclude: ['password', 'createdAt', 'updatedAt']} });
     return res.json( usuarios );
 }
 
@@ -17,8 +17,7 @@ export const getUsuario = async (req: Request, res: Response) => {
 
     const { id } = req.params;
 
-    const usuario = await User.findByPk( id );
-
+    const usuario = await User.findByPk( id, { attributes: { exclude: ['password', 'createdAt', 'updatedAt']} } );
     
     if ( !usuario ) {
         return res.status(404).json({

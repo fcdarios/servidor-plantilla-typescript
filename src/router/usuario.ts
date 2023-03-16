@@ -1,7 +1,9 @@
 import { Router } from "express";
 import { check } from "express-validator";
 
+import validarJWT from "../middlewares/validarJWT";
 import validarCampos from "../middlewares/validarCampos";
+import { validarRoles } from "../middlewares/validarRoles";
 import { esRolValido, existeEmail, existeUsuarioPorId } from "../helpers/validarCamposDB";
 
 import {
@@ -44,6 +46,8 @@ router.put('/:id', [
 ],putUsuarios);
 
 router.delete('/:id', [
+  validarJWT,
+  validarRoles('ADMIN_ROLE'),
   check('id', 'No es un ID valido').isNumeric(),
   check('id').custom( existeUsuarioPorId ),
   validarCampos
